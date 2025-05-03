@@ -22,7 +22,9 @@ class User(db.Model):
 
 class Favorite(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(db.Integer, db)
+    people_id: Mapped[int] = mapped_column(db.Integer, foreign_key=True)
+    planet_id: Mapped[int] = mapped_column(db.Integer, foreign_key=True)
+    user_id: Mapped[int] = mapped_column(db.Integer, foreign_key=False)
 
     def serialize(self):
         return {
