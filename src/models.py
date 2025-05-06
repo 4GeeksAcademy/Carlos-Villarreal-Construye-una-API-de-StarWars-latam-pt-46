@@ -20,11 +20,15 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(String(255), nullable=False)
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
 
-class Favorite(db.Model):
+class FavoritePlanet(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
-    people_id: Mapped[int] = mapped_column(db.Integer, foreign_key=True)
-    planet_id: Mapped[int] = mapped_column(db.Integer, foreign_key=True)
-    user_id: Mapped[int] = mapped_column(db.Integer, foreign_key=False)
+    user_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    planet_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('planet.id'), nullable=False)
+
+class FavoritePeople(db.Model):
+    id = Mapped[int] = mapped_column(db.Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    people_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('people.id'), nullable=False)
 
     def serialize(self):
         return {
